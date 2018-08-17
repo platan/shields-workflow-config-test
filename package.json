@@ -1,0 +1,20 @@
+{
+  "name": "shields-workflow-config-test",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "shields",
+    "probot",
+    "workflow"
+  ],
+  "author": "Marcin Mielnicki",
+  "license": "MIT",
+  "dependencies": {
+    "probot-workflow": "https://github.com/bkeepers/workflow.git"
+  },
+  "devDependencies": {
+    "jest": "^23.5.0"
+  }
+}
