@@ -46,7 +46,7 @@ This badge displays deployment status:
     }
   })
 
-  describe.only('create a comment after closing a pr', () => {
+  describe('create a comment after closing a pr', () => {
     it('accept', async () => {
       await configure(configuration, './fixtures/pr-closed.json')
       expect(github.issues.createComment).toHaveBeenCalled()
