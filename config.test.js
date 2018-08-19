@@ -13,10 +13,9 @@ describe('app', () => {
     github = {
       repos: {
         getContent: jest.fn().mockImplementation(params => {
-          const config = fs.readFileSync(params.path)
           return Promise.resolve({
             data: {
-              content: config
+              content: fs.readFileSync(params.path)
             }
           })
         })
@@ -31,11 +30,13 @@ describe('app', () => {
   describe('create a comment after closing a pr', () => {
     it('accept', async () => {
       await robot.receive({ event: 'pull_request', payload: require('./fixtures/pr-closed.json') })
+
       expect(github.issues.createComment).toHaveBeenCalled()
     })
 
     it('skip pr made by dependabot', async () => {
       await robot.receive({ event: 'pull_request', payload: require('./fixtures/pr-closed-by-dependabot.json') })
+      
       expect(github.issues.createComment).not.toHaveBeenCalled()
     })
   })
