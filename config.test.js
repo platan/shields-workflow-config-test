@@ -5,6 +5,11 @@ const fs = require('fs')
 describe('app', () => {
   let robot
   let github
+  let workflowConfiguration
+
+  beforeAll(() => {
+    workflowConfiguration = fs.readFileSync('.github/probot.js')
+  })
 
   beforeEach(() => {
     robot = createRobot()
@@ -15,7 +20,7 @@ describe('app', () => {
         getContent: jest.fn().mockImplementation(params => {
           return Promise.resolve({
             data: {
-              content: fs.readFileSync(params.path)
+              content: workflowConfiguration
             }
           })
         })
@@ -36,7 +41,7 @@ describe('app', () => {
 
     it('skip pr made by dependabot', async () => {
       await robot.receive({ event: 'pull_request', payload: require('./fixtures/pr-closed-by-dependabot.json') })
-      
+
       expect(github.issues.createComment).not.toHaveBeenCalled()
     })
   })
