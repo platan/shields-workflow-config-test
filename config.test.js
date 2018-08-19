@@ -1,6 +1,6 @@
 const { createRobot } = require('probot')
 const app = require('probot-workflow')
-const fs = require('fs');
+const fs = require('fs')
 
 describe('app', () => {
   let robot
@@ -10,11 +10,10 @@ describe('app', () => {
     robot = createRobot()
     app(robot)
 
-    robot.auth = () => Promise.resolve(github)
     github = {
       repos: {
         getContent: jest.fn().mockImplementation(params => {
-          const config = fs.readFileSync(params.path);
+          const config = fs.readFileSync(params.path)
           return Promise.resolve({
             data: {
               content: config
@@ -24,9 +23,9 @@ describe('app', () => {
       },
       issues: {
         createComment: jest.fn()
-        // TODO mock other functions, e.g edit
       }
     }
+    robot.auth = () => Promise.resolve(github)
   })
 
   describe('create a comment after closing a pr', () => {
